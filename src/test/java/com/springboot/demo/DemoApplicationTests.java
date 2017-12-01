@@ -1,6 +1,6 @@
 package com.springboot.demo;
 
-import com.zmx.controller.DemoApplication;
+import com.zmx.DemoApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

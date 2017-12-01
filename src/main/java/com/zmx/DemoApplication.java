@@ -1,4 +1,4 @@
-package com.zmx.controller;
+package com.zmx;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
