@@ -1,5 +1,5 @@
-environments:
-     name :  dfsdfsdf
+test:
+    name: dfsdfsdf
 #    dev:
 #        url: http://dev.bar.com
 #        name: Developer Setup

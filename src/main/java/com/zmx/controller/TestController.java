@@ -3,9 +3,14 @@ package com.zmx.controller;
 import com.zmx.service.IStudentService;
 import com.zmx.entity.Student;
 
+import com.zmx.util.MyConfig;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -17,8 +22,10 @@ public class TestController {
     @Autowired(required=true)
     private IStudentService _studentService;
 
+    @Autowired
+    private MyConfig myConfig;
 
-    @RequestMapping("/hello")
+    @RequestMapping( value = "/hello",method = RequestMethod.GET)
     public Object index() throws IOException {
 //        String resource = "mybatis-config.xml";
 //        InputStream inputStream = Resources.getResourceAsStream(resource);
@@ -28,8 +35,8 @@ public class TestController {
 //
 //        StudentMapper mapper = session.getMapper(StudentMapper.class);
 //        Student student=mapper.getById(3);
-        ArrayList<Student> studentList = _studentService.getAll();
 
+        ArrayList<Student> studentList = _studentService.getAll();
         Logger logger = Logger.getLogger(TestController.class.getName());
         // System.out.println("This is println message.");
 

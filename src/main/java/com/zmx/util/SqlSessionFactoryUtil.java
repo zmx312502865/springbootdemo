@@ -4,9 +4,11 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.context.annotation.Bean;
 
 import java.io.IOException;
 import java.io.Reader;
+
 
 public class SqlSessionFactoryUtil {
     //mybatis的主配置文件路径
@@ -22,7 +24,6 @@ public class SqlSessionFactoryUtil {
             e.printStackTrace();
         }
     }
-
     /*
      * 通过<span style="font-family: Arial, Helvetica, sans-serif;">SqlSessionFactoryBuilder对象的build方法</span>获得单例SqlSessionFactory工厂对象
     */
