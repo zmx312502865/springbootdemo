@@ -6,18 +6,23 @@ import com.zmx.entity.Student;
 import com.zmx.util.MyConfig;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.ArrayList;
 
+
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/zmx")
 public class TestController {
     @Autowired(required=true)
     private IStudentService _studentService;
@@ -50,5 +55,20 @@ public class TestController {
     }
 
 
+//    @RequestMapping("wz")
+//    public void getIcon( HttpServletRequest request,
+//                        HttpServletResponse response) throws IOException {
+//        String fileName = request.getSession().getServletContext().getRealPath("/")+"WEB-INF/classes/image/IMG_0597.png";
+//        File file = new File(fileName);
+//        FileInputStream inputStream = new FileInputStream(file);
+//        byte[] data = new byte[(int)file.length()];
+//        int length = inputStream.read(data);
+//        inputStream.close();
+//        response.setContentType("image/png");
+//        OutputStream stream = response.getOutputStream();
+//        stream.write(data);
+//        stream.flush();
+//        stream.close();
+//    }
 }
 

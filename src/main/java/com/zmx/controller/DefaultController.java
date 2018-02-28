@@ -8,14 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 
-@ResponseBody
-@RequestMapping("/Default")
-@EnableAutoConfiguration
+@RestController
+@RequestMapping("/zmx111")
 public class DefaultController {
 
     @RequestMapping("/")
-    String home() {
-
+    public   String home() {
         Test();
         HashMap<String, Integer> hashMap = new HashMap<>();
         hashMap.put("张三", 1);
@@ -32,7 +30,7 @@ public class DefaultController {
     }
 
     @RequestMapping("/hello/{myName}")
-    String index(@PathVariable String myName) {
+    public String index(@PathVariable String myName) {
         return "Hello " + myName + "!!!";
     }
 }

@@ -23,7 +23,7 @@ public class DemoApplication {
 
     @RequestMapping("/")
     @ResponseBody
-    Object home( HttpServletRequest request,String id) {
+    public Object home( HttpServletRequest request,String id) {
         JgwMongdb jgwMongdb=new JgwMongdb();
         List<PICodeFont> list= jgwMongdb.getTest();
         return list;
@@ -32,16 +32,16 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 }
-
-
+//@Controller
+//@EnableAutoConfiguration
 //@SpringBootApplication
 //public class DemoApplication extends SpringBootServletInitializer{
 //    @RequestMapping("/")
 //    @ResponseBody
-//    Object home( HttpServletRequest request,String id) {
-//        JgwMongdb jgwMongdb=new JgwMongdb();
-//        List<PICodeFont> list= jgwMongdb.getTest();
-//        return list;
+//    String home( HttpServletRequest request,String id) {
+////        JgwMongdb jgwMongdb=new JgwMongdb();
+////        List<PICodeFont> list= jgwMongdb.getTest();
+//        return "Welcome to my website    ---By Joker";
 //    }
 //    @Override
 //    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
