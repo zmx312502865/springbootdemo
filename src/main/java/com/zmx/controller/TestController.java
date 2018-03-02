@@ -32,19 +32,8 @@ public class TestController {
 
     @RequestMapping( value = "/hello",method = RequestMethod.GET)
     public Object index() throws IOException {
-//        String resource = "mybatis-config.xml";
-//        InputStream inputStream = Resources.getResourceAsStream(resource);
-//        SqlSessionFactoryUtil sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-//
-//        SqlSession session = sqlSessionFactory.openSession();
-//
-//        StudentMapper mapper = session.getMapper(StudentMapper.class);
-//        Student student=mapper.getById(3);
-
         ArrayList<Student> studentList = _studentService.getAll();
         Logger logger = Logger.getLogger(TestController.class.getName());
-        // System.out.println("This is println message.");
-
         // 记录debug级别的信息
         logger.debug("This is debug message.");
         // 记录info级别的信息
@@ -55,20 +44,21 @@ public class TestController {
     }
 
 
-//    @RequestMapping("wz")
-//    public void getIcon( HttpServletRequest request,
-//                        HttpServletResponse response) throws IOException {
-//        String fileName = request.getSession().getServletContext().getRealPath("/")+"WEB-INF/classes/image/IMG_0597.png";
-//        File file = new File(fileName);
-//        FileInputStream inputStream = new FileInputStream(file);
-//        byte[] data = new byte[(int)file.length()];
-//        int length = inputStream.read(data);
-//        inputStream.close();
-//        response.setContentType("image/png");
-//        OutputStream stream = response.getOutputStream();
-//        stream.write(data);
-//        stream.flush();
-//        stream.close();
-//    }
+    @RequestMapping("wz")
+    public void getIcon( HttpServletRequest request,
+                        HttpServletResponse response) throws IOException {
+//        String fileName = request.getSession().getServletContext().getRealPath("/")+"WEB-INF/classes/image/IMG_0597.PNG";
+        String fileName = TestController.class.getClassLoader().getResource("image/IMG_0597.PNG").getFile();
+        File file = new File(fileName);
+        FileInputStream inputStream = new FileInputStream(file);
+        byte[] data = new byte[(int)file.length()];
+        int length = inputStream.read(data);
+        inputStream.close();
+        response.setContentType("image/png");
+        OutputStream stream = response.getOutputStream();
+        stream.write(data);
+        stream.flush();
+        stream.close();
+    }
 }
 

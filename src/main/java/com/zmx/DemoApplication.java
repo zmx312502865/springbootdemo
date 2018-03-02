@@ -16,38 +16,38 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
-@Controller
-@EnableAutoConfiguration
-@ComponentScan("com.zmx")
-public class DemoApplication {
-
-    @RequestMapping("/")
-    @ResponseBody
-    public Object home( HttpServletRequest request,String id) {
-        JgwMongdb jgwMongdb=new JgwMongdb();
-        List<PICodeFont> list= jgwMongdb.getTest();
-        return list;
-    }
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(DemoApplication.class, args);
-    }
-}
 //@Controller
 //@EnableAutoConfiguration
-//@SpringBootApplication
-//public class DemoApplication extends SpringBootServletInitializer{
+//@ComponentScan("com.zmx")
+//public class DemoApplication {
+//
 //    @RequestMapping("/")
 //    @ResponseBody
-//    String home( HttpServletRequest request,String id) {
-////        JgwMongdb jgwMongdb=new JgwMongdb();
-////        List<PICodeFont> list= jgwMongdb.getTest();
-//        return "Welcome to my website    ---By Joker";
+//    public Object home( HttpServletRequest request,String id) {
+//        JgwMongdb jgwMongdb=new JgwMongdb();
+//        List<PICodeFont> list= jgwMongdb.getTest();
+//        return list;
 //    }
-//    @Override
-//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-//        return application.sources(DemoApplication.class);
-//    }
-//    public static void main(String[] args) {
+//    public static void main(String[] args) throws Exception {
 //        SpringApplication.run(DemoApplication.class, args);
 //    }
 //}
+@Controller
+@EnableAutoConfiguration
+@SpringBootApplication
+public class DemoApplication extends SpringBootServletInitializer{
+    @RequestMapping("/")
+    @ResponseBody
+    String home( HttpServletRequest request,String id) {
+//        JgwMongdb jgwMongdb=new JgwMongdb();
+//        List<PICodeFont> list= jgwMongdb.getTest();
+        return "Welcome to my website    ---By Joker";
+    }
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(DemoApplication.class);
+    }
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}
