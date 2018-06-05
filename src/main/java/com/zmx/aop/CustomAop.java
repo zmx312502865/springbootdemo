@@ -1,4 +1,4 @@
-package com.zmx.aopConfig;
+package com.zmx.aop;
 
 
 import org.aspectj.lang.ProceedingJoinPoint;

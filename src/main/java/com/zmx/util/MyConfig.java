@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 @PropertySource(value = "classpath:config.yml")
 @Component
 @ConfigurationProperties(prefix="test")
-
-
 public class MyConfig {
     @Value("${name}")
      public String name;

@@ -1,4 +1,4 @@
-package com.zmx.aopConfig;
+package com.zmx.aop;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -1,6 +1,7 @@
 package com.zmx.controller;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +19,7 @@ public class DefaultController {
         hashMap.put("张三", 1);
         hashMap.put("张三1", 12);
         hashMap.put("张三", 1);
-        return "Hello World!";
+        return "hello";
     }
     @RequestMapping("/hello/{myName}")
     public String index(@PathVariable String myName) {

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,10 +25,8 @@ import java.util.ArrayList;
 public class TestController {
     @Autowired(required=true)
     private IStudentService _studentService;
-
     @Autowired
     private MyConfig myConfig;
-
     @RequestMapping( value = "/hello",method = RequestMethod.GET)
     public Object index() throws IOException {
         ArrayList<Student> studentList = _studentService.getAll();
@@ -43,22 +40,21 @@ public class TestController {
         return studentList;
     }
 
-
-    @RequestMapping("wz")
-    public void getIcon( HttpServletRequest request,
-                        HttpServletResponse response) throws IOException {
-//        String fileName = request.getSession().getServletContext().getRealPath("/")+"WEB-INF/classes/image/IMG_0597.PNG";
-        String fileName = TestController.class.getClassLoader().getResource("image/IMG_0597.PNG").getFile();
-        File file = new File(fileName);
-        FileInputStream inputStream = new FileInputStream(file);
-        byte[] data = new byte[(int)file.length()];
-        int length = inputStream.read(data);
-        inputStream.close();
-        response.setContentType("image/png");
-        OutputStream stream = response.getOutputStream();
-        stream.write(data);
-        stream.flush();
-        stream.close();
-    }
+//    @RequestMapping("wz")
+//    public void getIcon( HttpServletRequest request,
+//                        HttpServletResponse response) throws IOException {
+////        String fileName = request.getSession().getServletContext().getRealPath("/")+"WEB-INF/classes/image/IMG_0597.PNG";
+//        String fileName = TestController.class.getClassLoader().getResource("image/IMG_0597.PNG").getFile();
+//        File file = new File(fileName);
+//        FileInputStream inputStream = new FileInputStream(file);
+//        byte[] data = new byte[(int)file.length()];
+//        int length = inputStream.read(data);
+//        inputStream.close();
+//        response.setContentType("image/png");
+//        OutputStream stream = response.getOutputStream();
+//        stream.write(data);
+//        stream.flush();
+//        stream.close();
+//    }
 }
 
