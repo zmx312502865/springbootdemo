@@ -24,7 +24,7 @@ public class DataSourceConfig {
     public DataSource masterDataSource() throws SQLException {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/javatest");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/bookmanage");
         dataSource.setUsername("root");
         dataSource.setPassword("123456");
 //        dataSource.setInitialSize(5);

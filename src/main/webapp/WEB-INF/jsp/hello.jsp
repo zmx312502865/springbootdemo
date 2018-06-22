@@ -11,6 +11,12 @@
     <title>22</title>
 </head>
 <body>
-  <img src="http://7xq4ej.com1.z0.glb.clouddn.com/IMG_1484.JPG">
+  hello world
+
+  <form method="POST" action="/book/upload" enctype="multipart/form-data">
+      <input type="file" name="file" /><br/><br/>
+      <input type="submit" value="Submit" />
+  </form>
+
 </body>
 </html>

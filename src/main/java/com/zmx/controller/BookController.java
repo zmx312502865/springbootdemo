@@ -1,6 +1,11 @@
 package com.zmx.controller;
 
-import com.zmx.entity.Student;
+import com.zmx.entity.ApiResult;
+import com.zmx.entity.Book;
+import com.zmx.entity.BookUser;
+import com.zmx.service.IBookService;
+import com.zmx.service.IBookUserService;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -8,9 +13,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,8 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,10 +33,40 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/book")
-public class DefaultController {
+public class BookController {
 
-    @RequestMapping("/mylist")
+    @Autowired(required=true)
+    private IBookService bookService;
+
+    @Autowired(required=true)
+    private IBookUserService bookUserService;
+
+    @PostMapping("")
+    public ApiResult<String> Add(@RequestBody Book book,@RequestHeader(value="UserId") int userId) {
+        ApiResult<String> apiResult=new ApiResult<>();
+        addBook(book,userId);
+        apiResult.code= bookService.Insert(book)>0? 200:500;
+        return  apiResult;
+    }
+
+    private  void  addBook(Book book,int userId){
+        bookService.Insert(book);
+        BookUser bu=new BookUser();
+        bu.bookId=book.bookId;
+        bu.userId=userId;
+        bookUserService.Insert(bu);
+    }
+
+    @PostMapping("/{bookId}")
+    public   Object Get(int bookId) {
+
+        return 1111;
+    }
+
+    @GetMapping("/mylist")
     public   Object home() {
+
+
         List<HashMap<String, String>> list= new ArrayList<>();
         for (int i=0;i<20;i++)
         {
@@ -46,7 +79,7 @@ public class DefaultController {
         return list;
     }
 
-    @RequestMapping("/isbn/{code}")
+    @GetMapping("/isbn/{code}")
     public   Object home(@PathVariable String code) throws IOException {
         if(code==null||code.equals(""))
         {
@@ -68,28 +101,25 @@ public class DefaultController {
         return  null;
     }
 
-    @RequestMapping("/hello/{myName}")
-    public String index(@PathVariable String myName) {
-        return "Hello " + myName + "!!!";
-    }
-
-
-    @PostMapping("/upload") // //new annotation since 4.3
-    public String singleFileUpload(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/image/upload") // //new annotation since 4.3
+    public ApiResult<String> singleFileUpload(@RequestParam("file") MultipartFile file) {
+        ApiResult<String> apiResult=new ApiResult<>();
+        apiResult.code=200;
         try {
-            String uuid = UUID.randomUUID().toString();
+            String newName = UUID.randomUUID().toString();  //+"."+ FilenameUtils.getExtension(file.getOriginalFilename());
             byte[] bytes = file.getBytes();
-            Path path = Paths.get("F:\\IISWeb\\Images\\" + uuid);
+            Path path = Paths.get("F:\\IISWeb\\Images\\" + newName);
             Files.write(path, bytes);
+            apiResult.data= "http://localhost:7777/book/image/"+newName  ;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/uploadStatus";
+        return   apiResult;
     }
-    @GetMapping(value = "/image",produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getImage() throws IOException {
+    @GetMapping(value = "/image/{fileName}",produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getImage(@PathVariable String fileName) throws IOException {
 
-        String path="F:\\IISWeb\\Images\\bg.png";
+        String path="F:\\IISWeb\\Images\\"+fileName;
         InputStream in = new FileInputStream(new File(path));
         return IOUtils.toByteArray(in);
     }
