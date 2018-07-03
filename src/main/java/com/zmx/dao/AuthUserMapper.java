@@ -10,13 +10,13 @@ import java.util.ArrayList;
 
 public interface AuthUserMapper {
 
-    @Select("SELECT * FROM AuthUser WHERE openId = #{id} and authType=#{authType}")
+    @Select("SELECT * FROM authuser WHERE openId = #{id} and authType=#{authType}")
     AuthUser getByOpenId(@Param("id")String id,@Param("authType") int authType);
 
-    @Select("SELECT * FROM Student ")
+    @Select("SELECT * FROM authuser ")
     ArrayList<AuthUser> getAll();
 
-    @Insert("Insert into AuthUser (userId,openId,authType,createTime)   values(#{userId},#{openId},#{authType},#{createTime})")
+    @Insert("Insert into authuser (userId,openId,authType,createTime)   values(#{userId},#{openId},#{authType},#{createTime})")
     @Options(useGeneratedKeys=true, keyProperty="authUserId")
     int Insert(AuthUser authUser);
 

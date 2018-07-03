@@ -1,5 +1,7 @@
 test:
     name: dfsdfsdf
+    imageResourseDomin: http://192.168.11.104:7777
+    imageSavePath: D:\\Projects\\BookManage\\Server\\images\\
 #    dev:
 #        url: http://dev.bar.com
 #        name: Developer Setup

@@ -10,10 +10,10 @@ import org.apache.ibatis.annotations.Select;
 public  interface BookUserMapper {
 
 
-    @Select("SELECT * FROM Book WHERE Bookid = #{id}")
+    @Select("SELECT * FROM book WHERE Bookid = #{id}")
     SysUser getById(int id);
 
-    @Insert("Insert into Userbook(userId,bookId) values(#{userId},#{bookId})")
+    @Insert("Insert into userbook(userId,bookId) values(#{userId},#{bookId})")
     @Options(useGeneratedKeys=true,  keyProperty = "bookUserId", keyColumn = "bookUserId")
     int Insert(BookUser bookUser);
 

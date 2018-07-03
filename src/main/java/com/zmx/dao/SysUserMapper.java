@@ -10,12 +10,12 @@ import java.util.ArrayList;
 
 public interface SysUserMapper {
 
-    @Select("SELECT * FROM SysUser WHERE UserId = #{id}")
+    @Select("SELECT * FROM sysuser WHERE userId = #{id}")
     SysUser getById(int id);
 
-    @Select("SELECT * FROM SysUser ")
+    @Select("SELECT * FROM sysuser ")
     ArrayList<SysUser> getAll();
-    @Insert("Insert into SysUser(UserName,CreateTime) values(#{UserName},#{CreateTime})")
-    @Options(useGeneratedKeys=true,  keyProperty = "UserId", keyColumn = "UserId")
+    @Insert("Insert into sysuser(userName,createTime) values(#{userName},#{createTime})")
+    @Options(useGeneratedKeys=true,  keyProperty = "userId", keyColumn = "userId")
     int Insert(SysUser sysUser);
 }

@@ -5,7 +5,6 @@ import com.zmx.entity.SysUser;
 import com.zmx.service.IAuthUserService;
 import com.zmx.service.IBookService;
 import com.zmx.service.ISysUserService;
-import com.zmx.util.AccountUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -29,9 +28,9 @@ public class AccountController {
     @Autowired(required=true)
     private  ISysUserService sysUserService;
 
-     @Autowired(required = true)
-     @Qualifier("AccountUtil")
-    private  AccountUtil accountUtil;
+//     @Autowired(required = true)
+//     @Qualifier("AccountUtil")
+//    private  AccountUtil accountUtil;
 
 
     @RequestMapping(value = "/wxlogin", method = RequestMethod.POST)
@@ -39,7 +38,7 @@ public class AccountController {
         String openId = getWxOpenId(requestMap.get("code"));
         if (openId == null || openId.isEmpty()) {
         }
-        SysUser user = accountUtil.AuthUserLoginOrRegist(openId, 1);
+        SysUser user = sysUserService.AuthUserLoginOrRegist(openId, 1);
         return user;
     }
 

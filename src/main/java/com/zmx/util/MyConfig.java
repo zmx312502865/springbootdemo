@@ -17,4 +17,10 @@ public class MyConfig {
     @Value("${name}")
      public String name;
 
+    @Value("${imageResourseDomin}")
+    public String imageResourseDomin;
+
+    @Value("${imageSavePath}")
+    public String imageSavePath;
+
 }

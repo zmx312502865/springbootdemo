@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.ArrayList;
 public interface BookMapper {
-    @Select("SELECT * FROM Book WHERE bookid = #{id}")
+    @Select("SELECT * FROM book WHERE bookid = #{id}")
     Book getById(int id);
 
     @Select("Select  b.* from userbook ub" +
@@ -17,7 +17,7 @@ public interface BookMapper {
     ArrayList<Book> getByUserId(int userId);
 
 
-    @Insert("Insert into Book(bookName,bookAuthor,bookAuthorIntro,bookPubdate,bookISBN,bookSummary,bookImageUrl) values(#{bookName},#{bookAuthor},#{bookAuthorIntro},#{bookPubdate},#{bookISBN},#{bookSummary},#{bookImageUrl})")
+    @Insert("Insert into book(bookName,bookAuthor,bookAuthorIntro,bookPubdate,bookISBN,bookSummary,bookImageUrl) values(#{bookName},#{bookAuthor},#{bookAuthorIntro},#{bookPubdate},#{bookISBN},#{bookSummary},#{bookImageUrl})")
     @Options(useGeneratedKeys=true,  keyProperty = "bookId", keyColumn = "bookId")
     int Insert(Book Book);
 

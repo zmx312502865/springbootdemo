@@ -5,6 +5,7 @@ import com.zmx.entity.Book;
 import com.zmx.entity.BookUser;
 import com.zmx.service.IBookService;
 import com.zmx.service.IBookUserService;
+import com.zmx.util.MyConfig;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -41,6 +42,9 @@ public class BookController {
     @Autowired(required=true)
     private IBookUserService bookUserService;
 
+    @Autowired
+    private MyConfig myConfig;
+
     @PostMapping("")
     public ApiResult<String> Add(@RequestBody Book book,@RequestHeader(value="UserId") int userId) {
         ApiResult<String> apiResult=new ApiResult<>();
@@ -64,16 +68,15 @@ public class BookController {
     }
 
     @GetMapping("/mylist")
-    public   Object home() {
-
-
+    public   Object home(@RequestHeader(value="UserId") int userId) {
+        ArrayList<Book> bookList= bookService.getByUserId(userId);
         List<HashMap<String, String>> list= new ArrayList<>();
-        for (int i=0;i<20;i++)
+        for (int i=0;i<bookList.size();i++)
         {
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("imageUrl", "http://cdn2.kcomber.com:8195/upload//Plant/violet/0719A03D-7832-4C96-A4D8-544309E31B7D.jpg");
-            hashMap.put("bookName", "少年张三丰"+i);
-            hashMap.put("createTime", "2015-12-12");
+            hashMap.put("imageUrl",bookList.get(i).bookImageUrl);
+            hashMap.put("bookName", bookList.get(i).bookName);
+            hashMap.put("createTime",  bookList.get(i).bookPubdate);
             list.add(hashMap);
         }
         return list;
@@ -108,9 +111,9 @@ public class BookController {
         try {
             String newName = UUID.randomUUID().toString();  //+"."+ FilenameUtils.getExtension(file.getOriginalFilename());
             byte[] bytes = file.getBytes();
-            Path path = Paths.get("F:\\IISWeb\\Images\\" + newName);
+            Path path = Paths.get( myConfig.imageSavePath+ newName);
             Files.write(path, bytes);
-            apiResult.data= "http://localhost:7777/book/image/"+newName  ;
+            apiResult.data=  myConfig.imageResourseDomin+ "/book/image/"+newName  ;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,7 +122,7 @@ public class BookController {
     @GetMapping(value = "/image/{fileName}",produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getImage(@PathVariable String fileName) throws IOException {
 
-        String path="F:\\IISWeb\\Images\\"+fileName;
+        String path=myConfig.imageSavePath+fileName;
         InputStream in = new FileInputStream(new File(path));
         return IOUtils.toByteArray(in);
     }
