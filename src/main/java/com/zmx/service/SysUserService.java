@@ -34,26 +34,27 @@ public class SysUserService implements  ISysUserService {
     }
 
 
-
     @Override
-    public    SysUser  AuthUserLoginOrRegist(String openId,int authType) {
+    public SysUser authUserLoginOrRegist(String openId, int authType, String nickName, String avatarUrl) {
         AuthUser authUser = authUserMapper.getByOpenId(openId, authType);
-        if (authUser != null && authUser.userId > 0) {
-            return sysUserMapper.getById(authUser.userId);
+        if (authUser != null && authUser.getUserId() > 0) {
+            return sysUserMapper.getById(authUser.getUserId());
         }
-        return   AutoCreateAuthUser(openId, authType);
+        return   autoCreateAuthUser(openId, authType, nickName,  avatarUrl);
 
     }
-    public   SysUser  AutoCreateAuthUser(String openId,int authType) {
+    public   SysUser  autoCreateAuthUser(String openId,int authType,String nickName, String avatarUrl) {
 
         SysUser user = new SysUser();
-        user.createTime = new Date();
-        user.userName = "test";
+        user.setCreateTime(new Date());
+        user.setUserName("test");
+        user.setNickName(nickName);
+        user.setAvatarUrl(avatarUrl);
         int userId = sysUserMapper.Insert(user);
 
         AuthUser authUser = new AuthUser(openId, authType);
-        authUser.createTime = new Timestamp(new Date().getTime());
-        authUser.userId = user.userId;
+        authUser.setCreateTime(new Timestamp(new Date().getTime()));
+        authUser.setUserId(user.getUserId());
         authUserMapper.Insert(authUser);
         return user;
     }

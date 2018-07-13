@@ -1,6 +1,8 @@
 package com.zmx.controller;
 
 import com.google.gson.Gson;
+import com.zmx.entity.ApiResult;
+import com.zmx.entity.Book;
 import com.zmx.entity.SysUser;
 import com.zmx.service.IAuthUserService;
 import com.zmx.service.IBookService;
@@ -16,6 +18,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,17 +33,32 @@ public class AccountController {
     @Autowired(required=true)
     private  ISysUserService sysUserService;
 
+    @Autowired(required=true)
+    private IBookService bookService;
 //     @Autowired(required = true)
 //     @Qualifier("AccountUtil")
 //    private  AccountUtil accountUtil;
 
 
+    @GetMapping(value="")
+    public   ApiResult<List<SysUser>> getList() {
+        ApiResult<List<SysUser>> result = new ApiResult<>();
+        result.setCode(200);
+        List<SysUser> userList = sysUserService.getAll();
+        result.setData(userList);
+        return result;
+    }
+
+
+
     @RequestMapping(value = "/wxlogin", method = RequestMethod.POST)
-    public   Object home(@RequestBody Map<String, String> requestMap) throws IOException {
+    public   Object wxlogin(@RequestBody Map<String, String> requestMap) throws IOException {
         String openId = getWxOpenId(requestMap.get("code"));
+        String nickName =requestMap.get("nickName");
+        String avatarUrl = requestMap.get("avatarUrl");
         if (openId == null || openId.isEmpty()) {
         }
-        SysUser user = sysUserService.AuthUserLoginOrRegist(openId, 1);
+        SysUser user = sysUserService.authUserLoginOrRegist(openId, 1,nickName,avatarUrl);
         return user;
     }
 
@@ -62,4 +82,22 @@ public class AccountController {
         }
         return  "";
     }
+
+
+    @GetMapping("/{userId}/book")
+    public   Object home(@PathVariable(value="userId") int userId) {
+        ArrayList<Book> bookList= bookService.getByUserId(userId);
+        List<HashMap<String, String>> list= new ArrayList<>();
+        for (int i=0;i<bookList.size();i++)
+        {
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("imageUrl",bookList.get(i).getBookImageUrl());
+            hashMap.put("bookName", bookList.get(i).getBookName());
+            hashMap.put("createTime",  bookList.get(i).getBookPubdate());
+            list.add(hashMap);
+        }
+        return list;
+    }
+
+
 }

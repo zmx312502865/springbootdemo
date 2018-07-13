@@ -21,9 +21,50 @@ public class AuthUser {
         this.openId = openId;
         this.authType = authType;
     }
-    public  Integer authUserId;
-    public  Integer userId;
-    public  String openId;
-    public  Integer authType;
-    public Timestamp createTime;
+
+    public Integer getAuthUserId() {
+        return authUserId;
+    }
+
+    public void setAuthUserId(Integer authUserId) {
+        this.authUserId = authUserId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public Integer getAuthType() {
+        return authType;
+    }
+
+    public void setAuthType(Integer authType) {
+        this.authType = authType;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
+    private   Integer authUserId;
+   private   Integer userId;
+   private   String openId;
+   private   Integer authType;
+   private Timestamp createTime;
 }

@@ -11,5 +11,5 @@ public interface ISysUserService {
     SysUser getById(int id);
     ArrayList<SysUser> getAll();
     int Insert(SysUser sysUser);
-    SysUser  AuthUserLoginOrRegist(String openId,int authType);
+    SysUser  authUserLoginOrRegist(String openId,int authType,String nickName, String avatarUrl);
 }

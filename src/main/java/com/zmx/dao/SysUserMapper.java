@@ -13,9 +13,9 @@ public interface SysUserMapper {
     @Select("SELECT * FROM sysuser WHERE userId = #{id}")
     SysUser getById(int id);
 
-    @Select("SELECT * FROM sysuser ")
+    @Select("select u.*,(select  count(1) from userbook ub where ub.userid=u.UserId) as bookCount  from sysuser u ")
     ArrayList<SysUser> getAll();
-    @Insert("Insert into sysuser(userName,createTime) values(#{userName},#{createTime})")
+    @Insert("Insert into sysuser(userName,createTime,nickName,avatarUrl) values(#{userName},#{createTime},#{nickName},#{avatarUrl})")
     @Options(useGeneratedKeys=true,  keyProperty = "userId", keyColumn = "userId")
     int Insert(SysUser sysUser);
 }

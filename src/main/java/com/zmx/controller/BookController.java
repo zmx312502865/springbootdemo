@@ -46,19 +46,11 @@ public class BookController {
     private MyConfig myConfig;
 
     @PostMapping("")
-    public ApiResult<String> Add(@RequestBody Book book,@RequestHeader(value="UserId") int userId) {
+    public ApiResult<String> Add(@RequestBody Book book,@RequestHeader(value="UserId") int userId) throws Exception {
         ApiResult<String> apiResult=new ApiResult<>();
-        addBook(book,userId);
-        apiResult.code= bookService.Insert(book)>0? 200:500;
+        bookService.Insert(book,userId);
+        apiResult.setCode(200);
         return  apiResult;
-    }
-
-    private  void  addBook(Book book,int userId){
-        bookService.Insert(book);
-        BookUser bu=new BookUser();
-        bu.bookId=book.bookId;
-        bu.userId=userId;
-        bookUserService.Insert(bu);
     }
 
     @PostMapping("/{bookId}")
@@ -67,20 +59,7 @@ public class BookController {
         return 1111;
     }
 
-    @GetMapping("/mylist")
-    public   Object home(@RequestHeader(value="UserId") int userId) {
-        ArrayList<Book> bookList= bookService.getByUserId(userId);
-        List<HashMap<String, String>> list= new ArrayList<>();
-        for (int i=0;i<bookList.size();i++)
-        {
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("imageUrl",bookList.get(i).bookImageUrl);
-            hashMap.put("bookName", bookList.get(i).bookName);
-            hashMap.put("createTime",  bookList.get(i).bookPubdate);
-            list.add(hashMap);
-        }
-        return list;
-    }
+
 
     @GetMapping("/isbn/{code}")
     public   Object home(@PathVariable String code) throws IOException {
@@ -104,16 +83,16 @@ public class BookController {
         return  null;
     }
 
-    @PostMapping("/image/upload") // //new annotation since 4.3
+    @PostMapping("/image/upload")
     public ApiResult<String> singleFileUpload(@RequestParam("file") MultipartFile file) {
         ApiResult<String> apiResult=new ApiResult<>();
-        apiResult.code=200;
+        apiResult.setCode(200);
         try {
             String newName = UUID.randomUUID().toString();  //+"."+ FilenameUtils.getExtension(file.getOriginalFilename());
             byte[] bytes = file.getBytes();
             Path path = Paths.get( myConfig.imageSavePath+ newName);
             Files.write(path, bytes);
-            apiResult.data=  myConfig.imageResourseDomin+ "/book/image/"+newName  ;
+            apiResult.setData(myConfig.imageResourseDomin+ "/book/image/"+newName );
         } catch (IOException e) {
             e.printStackTrace();
         }
